@@ -1,0 +1,9 @@
+Flask==3.1.0
+waitress==3.0.2
+pycryptodome==3.22.0
+pillow==11.1.0
+python-exiv2==0.11.0
+sqlalchemy==2.0.39
+sqlalchemy-orm==1.2.10
+psycopg2-binary
+redis==5.2.1

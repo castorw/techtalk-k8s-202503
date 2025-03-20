@@ -1,0 +1,32 @@
+---
+services:
+  db:
+    image: bitnami/postgresql:17.4.0
+    environment:
+      - POSTGRESQL_DATABASE=my-app
+      - POSTGRESQL_USER=my-app
+      - POSTGRESQL_PASSWORD=TopSecret123!
+    volumes:
+      - ./data/postgresql:/bitnami/postgresql:rw
+    ports:
+      - 127.0.0.1:5432:5432
+  redis:
+    image: redis:7.4.2-alpine3.21
+    volumes:
+      - ./data/redis:/data:rw
+    ports:
+      - 127.0.0.1:6379:6379
+  # my-app:
+  #   build: .
+  #   restart: always
+  #   environment:
+  #     - APP_HOST=0.0.0.0
+  #     - REDIS_HOST=redis
+  #     - DB_HOST=db
+  #     - DB_USER=my-app
+  #     - DB_PASSWORD=TopSecret123!
+  #   volumes:
+  #     - ./signing.private.pem:/opt/my-app/signing.private.pem:ro
+  #     - ./signing.public.pem:/opt/my-app/signing.public.pem:ro
+  #   ports:
+  #     - 127.0.0.1:8080:8080
