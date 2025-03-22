@@ -2,6 +2,7 @@
 services:
   db:
     image: bitnami/postgresql:17.4.0
+    restart: always
     environment:
       - POSTGRESQL_DATABASE=my-app
       - POSTGRESQL_USER=my-app
@@ -10,6 +11,7 @@ services:
       - ./data/postgresql:/bitnami/postgresql:rw
   redis:
     image: redis:7.4.2-alpine3.21
+    restart: always
     volumes:
       - ./data/redis:/data:rw
   my-app:
