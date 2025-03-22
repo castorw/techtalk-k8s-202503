@@ -26,7 +26,7 @@ resource "kubectl_manifest" "argocd_my_app_application" {
                   "nginx.ingress.kubernetes.io/proxy-read-timeout" = "300"
                   "nginx.ingress.kubernetes.io/proxy-send-timeout" = "300"
                 }
-                hostname = "my-app.${local.app_domain}"
+                hostname = "my-app.${var.domain}"
                 tls      = true
               }
             }

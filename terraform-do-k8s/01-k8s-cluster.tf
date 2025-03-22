@@ -1,5 +1,5 @@
 resource "digitalocean_kubernetes_cluster" "cluster" {
-  name                             = local.k8s_cluster_name
+  name                             = var.k8s_cluster_name
   region                           = "fra1"
   version                          = "1.32.2-do.0"
   auto_upgrade                     = false
@@ -7,7 +7,7 @@ resource "digitalocean_kubernetes_cluster" "cluster" {
   kubeconfig_expire_seconds        = 315360000
 
   node_pool {
-    name       = "${local.k8s_cluster_name}-pool-1"
+    name       = "${var.k8s_cluster_name}-pool-1"
     size       = "s-1vcpu-2gb"
     node_count = 3
   }

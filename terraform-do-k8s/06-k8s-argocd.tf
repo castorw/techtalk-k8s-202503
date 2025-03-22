@@ -10,7 +10,7 @@ resource "helm_release" "argocd" {
       ingress = {
         enabled          = true
         ingressClassName = "nginx"
-        hostname         = "argocd.${local.app_domain}"
+        hostname         = "argocd.${var.domain}"
         tls              = true
         annotations = {
           "nginx.ingress.kubernetes.io/force-ssl-redirect" = "true"

@@ -1,5 +1,5 @@
 resource "digitalocean_domain" "app_domain" {
-  name = local.app_domain
+  name = var.domain
 }
 
 resource "kubernetes_secret" "external_dns_digitalocean" {
@@ -19,7 +19,7 @@ resource "helm_release" "external_dns" {
   chart      = "external-dns"
   version    = "1.16.0"
   values = [yamlencode({
-    domainFilters = [local.app_domain]
+    domainFilters = [var.domain]
     provider = {
       name = "digitalocean"
     }
