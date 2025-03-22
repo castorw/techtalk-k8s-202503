@@ -1,0 +1,13 @@
+apiVersion: v2
+name: my-app
+description: A Helm chart for my-app
+type: application
+version: 1.0.0
+appVersion: 1.0.0
+dependencies:
+  - name: redis
+    version: 20.11.3
+    repository: https://charts.bitnami.com/bitnami
+  - name: postgresql
+    version: 16.5.5
+    repository: https://charts.bitnami.com/bitnami

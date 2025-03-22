@@ -1,4 +1,10 @@
 .DS_Store
 .venv
 *.pem
+*.tfstate
+*.tfstate.backup
+.terraform**
+secrets.auto.tfvars
 /my-app/data/**
+/compose-prod/data/**
+

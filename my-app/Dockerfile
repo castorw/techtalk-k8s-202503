@@ -8,3 +8,4 @@ RUN \
   apk --no-cache del build-base exiv2-dev && \
   apk --no-cache add exiv2
 CMD ["python3", "app.py"]
+LABEL org.opencontainers.image.source=https://github.com/castorw/techtalk-k8s-202503

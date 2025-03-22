@@ -1,0 +1,55 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: ghcr.io/castorw/techtalk-k8s-202503-my-app
+  tag: latest
+  pullPolicy: Always
+imagePullSecrets: []
+
+server:
+  replicaCount: 3
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  service:
+    type: ClusterIP
+    port: 80
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hostname: ""
+    tls: false
+
+keypairGenerator:
+  enabled: true
+  nodeSelector: {}
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+redis:
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      storageClass: default
+      size: 4Gi
+
+postgresql:
+  auth:
+    username: my-app
+    password: DefaultPostgresqlPassword
+    database: my-app
+  primary:
+    persistence:
+      enabled: true
+      storageClass: default
+      size: 4Gi

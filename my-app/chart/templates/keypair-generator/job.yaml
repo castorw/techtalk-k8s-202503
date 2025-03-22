@@ -1,0 +1,51 @@
+{{- if .Values.keypairGenerator.enabled -}}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "chart.fullname" . }}-generate-keypair
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+  annotations: 
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "5"
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "chart.serviceAccountName" . }}
+      {{- with .Values.keypairGenerator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Never
+      containers:
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: generate
+          command:
+            - /bin/sh
+            - -c
+            - |
+              apk add kubectl openssl
+              kubectl -n {{ .Release.Namespace }} get secrets {{ include "chart.fullname" . }}-signing-keypair
+              if [[ "$?" != "0" ]]; then
+                openssl genrsa -out ./signing.private.pem 4096
+                openssl rsa -in ./signing.private.pem -pubout -out ./signing.public.pem
+                kubectl -n {{ .Release.Namespace }} create secret generic {{ include "chart.fullname" . }}-signing-keypair \
+                  --from-file=signing.private.pem=./signing.private.pem \
+                  --from-file=signing.public.pem=./signing.public.pem
+                if [[ "$?" != "0" ]]; then
+                  exit 1
+                fi
+                echo "Keypair generated and saved"
+              else
+                echo "Keypair already exists"
+              fi
+
+{{- end }}

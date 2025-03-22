@@ -1,0 +1,14 @@
+{{- if .Values.keypairGenerator.enabled -}}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "chart.fullname" . }}-keypair-generator
+  annotations: 
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-weight: "4"
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["list", "get", "watch", "patch", "update", "create"]
+{{- end }}

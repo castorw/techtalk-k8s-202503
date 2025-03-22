@@ -5,29 +5,24 @@ services:
     environment:
       - POSTGRESQL_DATABASE=my-app
       - POSTGRESQL_USER=my-app
-      - POSTGRESQL_PASSWORD=TopSecret123!
+      - POSTGRESQL_PASSWORD=be998a87b26bb6c2b7c6f66a00461a3ea4cf962f3cf23789a88864352972b69d
     volumes:
       - ./data/postgresql:/bitnami/postgresql:rw
-    ports:
-      - 127.0.0.1:5432:5432
   redis:
     image: redis:7.4.2-alpine3.21
     volumes:
       - ./data/redis:/data:rw
-    ports:
-      - 127.0.0.1:6379:6379
   my-app:
-    build: .
+    image: ghcr.io/castorw/techtalk-k8s-202503-my-app:latest
     restart: always
     environment:
       - APP_HOST=0.0.0.0
       - REDIS_HOST=redis
       - DB_HOST=db
       - DB_USER=my-app
-      - DB_PASSWORD=TopSecret123!
+      - DB_PASSWORD=be998a87b26bb6c2b7c6f66a00461a3ea4cf962f3cf23789a88864352972b69d
     volumes:
-      - ./app.py:/opt/my-app/app.py:ro
       - ./signing.private.pem:/opt/my-app/signing.private.pem:ro
       - ./signing.public.pem:/opt/my-app/signing.public.pem:ro
     ports:
-      - 127.0.0.1:8080:8080
+      - 0.0.0.0:8080:8080
