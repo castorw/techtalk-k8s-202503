@@ -2,6 +2,7 @@
 This repository contains the following resources:
 * **my-app** - reference application for deployment (requires PostgreSQL and Redis)
 * **my-app/chart** - reference Helm chart to deploy `my-app`
+* **.github/workflows** - GitHub CI/CD workflow to upload application container image to `ghcr.io` registry
 * **compose-prod** - sample production deployment using Docker Compose
 * **terraform-do-k8s** - sample Terraform module to create K8S cluster in DigitalOcean and run `my-app` using Helm-based ArgoCD deployment
 
